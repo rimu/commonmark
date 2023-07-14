@@ -23,6 +23,19 @@ use PHPUnit\Framework\TestCase;
  */
 final class RegexHelperTest extends TestCase
 {
+    public function testUnsafeUrl(): void
+    {
+        $regex = RegexHelper::REGEX_UNSAFE_PROTOCOL;
+        $this->assertRegexMatches($regex, 'javascript:');
+        $this->assertRegexMatches($regex, ' javascript:');
+    }
+
+    public function testSafeUrl(): void
+    {
+        $regex = RegexHelper::REGEX_SAFE_DATA_PROTOCOL;
+        $this->assertRegexMatches($regex, 'data:');
+    }
+
     public function testEscapable(): void
     {
         $regex = '/^' . RegexHelper::PARTIAL_ESCAPABLE . '$/';
